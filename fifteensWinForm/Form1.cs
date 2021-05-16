@@ -20,7 +20,7 @@ namespace fifteensWinForm
 
         Numbers numbers = new Numbers();
         DateTime date = new DateTime();
-        Timer me = new Timer();
+        Timer timer = new Timer();
         DateTime startTime = new DateTime();
         DateTime gameTime = new DateTime();
         public string playerName = null;
@@ -35,15 +35,15 @@ namespace fifteensWinForm
         {
             InitializeComponent();
             dataGrid.Font = new System.Drawing.Font("Verdana", 18F, System.Drawing.FontStyle.Bold);
-            me.Tick += OhTick;
+            timer.Tick += OnTick;
         }
         private void TimerNewGame()
         {
-            me.Tick -= OhTick;
-            me = new Timer();
-            me.Enabled = true;
-            me.Interval = 1000;
-            me.Tick += OhTick;
+            timer.Tick -= OnTick;
+            timer = new Timer();
+            timer.Enabled = true;
+            timer.Interval = 1000;
+            timer.Tick += OnTick;
             date = new DateTime(0, 0);
             ShowTime.Text = date.ToString("mm:ss");
         }
@@ -165,7 +165,7 @@ namespace fifteensWinForm
             ShowPosition();
         }
 
-        private void OhTick(object sender, EventArgs e)
+        private void OnTick(object sender, EventArgs e)
         {
             date = date.AddSeconds(1);
             ShowTime.Text = date.ToString("mm:ss");
@@ -185,9 +185,6 @@ namespace fifteensWinForm
             mm.Load();
             mm.Add(gr);
             mm.Save();
-            IEnumerable<GameResult> top = mm.GetTopTime();
-            var x = top.ToArray();
         }
-
     }
 }

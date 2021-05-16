@@ -12,14 +12,12 @@ namespace fifteensWinForm
 {
     public partial class MenuForm : Form
     {
-        MemoryManager mm = new MemoryManager(@"C:\Users\Liza\source\repos old\fifteensWinForm\fifteensWinForm\results.dat");
+        MemoryManager memMan = new MemoryManager(@"C:\Users\Liza\source\repos old\fifteensWinForm\fifteensWinForm\results.dat");
         AskForm askDateForm;
         public MenuForm()
         {
-
-            InitializeComponent();
-            
-                 mm.Load();
+            InitializeComponent();          
+            memMan.Load();
         }
 
         private void DisplayGrid(IEnumerable<GameResult> results)
@@ -28,8 +26,8 @@ namespace fifteensWinForm
             {
                 int counter = 0;
                 GridResult.Rows.Add("Player:", it.Player);
-                GridResult.Rows.Add("Time:", it.GameTime.ToString("mm:ss"));
-                GridResult.Rows.Add("Date:", it.StartTime.ToString("dd.MM.yyyy HH:mm:ss"));
+                GridResult.Rows.Add("Time:", it.GameTime.ToString("memMan:ss"));
+                GridResult.Rows.Add("Date:", it.StartTime.ToString("dd.memMan.yyyy HH:memMan:ss"));
                 GridResult.Rows.Add("Steps", it.Steps);
 
                 GridResult.Rows[counter * 4].Cells[1].Style.BackColor = Color.Purple;
@@ -56,7 +54,7 @@ namespace fifteensWinForm
 
         private void Top10Time_Click(object sender, EventArgs e)
         {
-            var results = mm.GetTopTime(10);            
+            var results = memMan.GetTopTime(10);            
             Results.Text = "Top 10 by time";
             SetNewGrid();
             DisplayGrid(results);
@@ -64,7 +62,7 @@ namespace fifteensWinForm
 
         private void Last10_Click(object sender, EventArgs e)
         {
-            var results = mm.GetLast(10);
+            var results = memMan.GetLast(10);
             Results.Text = "Last 10";
             SetNewGrid();
             DisplayGrid(results);      
@@ -72,7 +70,7 @@ namespace fifteensWinForm
 
         private void Top10Steps_Click(object sender, EventArgs e)
         {
-            var results = mm.GetTopSteps(10);
+            var results = memMan.GetTopSteps(10);
             Results.Text = "Top 10 by steps";
             SetNewGrid();
             DisplayGrid(results);
@@ -80,7 +78,7 @@ namespace fifteensWinForm
 
         private void ClearHistory_Click(object sender, EventArgs e)
         {
-            askDateForm = new AskForm(@"Enter date in format ""dd.MM.yyyy"": ", Ok, Cancel);
+            askDateForm = new AskForm(@"Enter date in format ""dd.memMan.yyyy"": ", Ok, Cancel);
             askDateForm.ShowDialog();
         }    
 
@@ -89,8 +87,9 @@ namespace fifteensWinForm
             DateTime date;
             try
             {
-                date = DateTime.ParseExact(text, "dd.MM.yyyy", null);
-                mm.Delete(date);
+                date = DateTime.ParseExact(text, "dd.memMan.yyyy", null);
+                memMan.Delete(date);
+                memMan.Save();
                 askDateForm.Close();
             }
             catch
